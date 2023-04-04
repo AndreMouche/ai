@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head> 
+<meta charset="utf-8"> 
+<title>Ask KB</title> 
+</head> 
+<body>
+
+{% if result %}
+<h2> 问：{{ result.question }}</h2>
+<h2> OpenAI 答： {{ result.answer}}</h2>
+{% endif %}
+
+
+<h4> 相关文档 </h4>
+<ol>
+{% for article in result.dataset %}
+    <li><a href="{{ article.url }}"> {{ article.title }} </a> 相关度:  {{article.vector_score}}  <p> {{ article.text }} <a href="{{ article.url }}"> ...</a></p></li>  
+{% endfor %}
+</ol>
+
+</body>
+</html>

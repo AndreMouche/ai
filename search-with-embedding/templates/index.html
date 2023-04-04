@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<head>
+  <title>Ask KB</title>
+  <link
+    rel="shortcut icon"
+    href="{{ url_for('static', filename='dog.png') }}"
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
+</head>
+<style>
+  p.normal {font-style:normal;}
+  p.italic {font-style:italic;text-shadow: 5px 5px 5px #b3aae0;}
+  p.oblique {font-style:oblique; text-shadow: 5px 5px 5px #e76a40;}
+  </style>
+<body>
+  <img src="{{ url_for('static', filename='dog.png') }}" class="icon" />
+  <h3>全球最强 TIDB 知识库 </h3>
+  <form action="/" method="post">
+    <input type="text" name="animal" placeholder="请输入问题" required />
+    <input type="submit" value="查询" />
+  </form>
+  {% if result %}
+  <div class="result">
+    <p class="oblique"> 问：{{ result.question }} </p>
+    <p class="italic">OpenAI 答：{{ result.answer}} </p>
+
+
+<h5> 相关文档 </h5>
+<ol>
+{% for article in result.dataset %}
+    <li><a href="{{ article.url }}"> {{ article.title }} </a> 相关度:  {{article.vector_score}}  <p> {{ article.text }} <a href="{{ article.url }}"> ...</a></p></li>  
+{% endfor %}
+</ol>
+  </div>
+  {% endif %}
+</body>
